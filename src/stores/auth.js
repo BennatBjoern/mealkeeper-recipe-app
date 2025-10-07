@@ -9,6 +9,28 @@ export const useAuthStore = defineStore('auth', () => {
   const isInitialized = ref(false)
   const passwordMinLength = 6
 
+  // Helper function for German error messages
+  function translateSupabaseError(errorMessage) {
+    if (!errorMessage) return ''
+
+    const translations = [
+      { en: 'Invalid login credentials', de: 'Ungültige Anmeldedaten' },
+      { en: 'User already registered', de: 'Benutzer ist bereits registriert' },
+      { en: 'User not found', de: 'Benutzer nicht gefunden' },
+      { en: 'Invalid email', de: 'Ungültige E-Mail-Adresse' },
+      { en: 'Password cannot be empty', de: 'Passwort darf nicht leer sein' },
+      { en: 'Session expired', de: 'Sitzung abgelaufen, bitte neu anmelden' },
+    ]
+
+    for (const t of translations) {
+      if (errorMessage.includes(t.en)) {
+        return t.de
+      }
+    }
+    // Fallback - give the original message if no translation is found
+    return errorMessage
+  }
+
   async function signUp(email, password, username, passwordConfirm) {
     loading.value = true
     error.value = null
@@ -32,13 +54,20 @@ export const useAuthStore = defineStore('auth', () => {
         options: { data: { username } },
       })
 
+      // Check for Supabase errors and translate
+      if (result.error) {
+        error.value = translateSupabaseError(result.error.message)
+        loading.value = false
+        return
+      }
+
       // User successfully registered
       if (result.data.user) {
         user.value = result.data.user
         console.log('Benutzer erfolgreich registriert')
       }
     } catch (err) {
-      error.value = err.message
+      error.value = translateSupabaseError(err.message)
     }
 
     loading.value = false
@@ -57,10 +86,10 @@ export const useAuthStore = defineStore('auth', () => {
         user.value = result.data.user
       }
       if (result.error) {
-        error.value = result.error.message
+        error.value = translateSupabaseError(result.error.message)
       }
     } catch (err) {
-      error.value = err.message
+      error.value = translateSupabaseError(err.message)
     }
     loading.value = false
   }
@@ -97,6 +126,7 @@ export const useAuthStore = defineStore('auth', () => {
     loading,
     error,
     isInitialized,
+    translateSupabaseError,
     signUp,
     signIn,
     signOut,
