@@ -10,12 +10,17 @@ export const useRecipesStore = defineStore('recipes', () => {
   const currentRecipe = ref(null)
 
   // Fetch Recipes
-  async function fetchRecipes() {
+  async function fetchRecipes(searchTerm = '') {
     loading.value = true
     error.value = null
 
     try {
       let query = supabase.from('recipes').select('*').order('created_at', { ascending: false })
+
+      // Search by title
+      if (searchTerm.trim() !== '') {
+        query = query.ilike('title', `%${searchTerm.trim()}%`)
+      }
 
       const { data, error: fetchError } = await query
 

@@ -337,6 +337,11 @@ function goToRecipe(recipeId) {
   router.push(`/recipes/${recipeId}`)
 }
 
+// Search Input
+async function onSearchInput() {
+  await recipesStore.fetchRecipes(searchTerm.value)
+}
+
 // Register
 async function register() {
   await authStore.signUp(email.value, password.value, username.value, passwordConfirm.value)
