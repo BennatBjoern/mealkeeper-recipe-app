@@ -19,7 +19,7 @@ const router = createRouter({
 })
 
 // Check if the user is authenticated
-router.beforeEach(async (to, form, next) => {
+router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore()
   const requiresAuth = to.meta.requiresAuth
   while (!authStore.isInitialized) {
