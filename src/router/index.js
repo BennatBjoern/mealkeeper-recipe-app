@@ -21,6 +21,12 @@ const router = createRouter({
       component: () => import('../views/RecipeDetailView.vue'),
       meta: { requiresAuth: true },
     },
+    {
+      path: '/recipes/:id/edit',
+      name: 'recipe-edit',
+      component: () => import('../views/CreateRecipeView.vue'),
+      meta: { requiresAuth: true },
+    },
   ],
 })
 
