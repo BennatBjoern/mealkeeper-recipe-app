@@ -1,44 +1,93 @@
-# mealkeeper-recipe-app
+# MealKeeper – Modern Recipe Manager
 
-This template should help get you started developing with Vue 3 in Vite.
+MealKeeper is a modern, user-friendly recipe manager built with Vue.js 3, Pinia, Supabase, and Tailwind CSS. Easily collect, organize, and scale your favorite recipes. Features include cloud authentication, dynamic ingredient scaling, image upload, and mobile-optimized design.
 
-## Recommended IDE Setup
+## Features
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- **User Authentication**  
+  Secure registration and login with Supabase Auth.
 
-## Recommended Browser Setup
+- **Recipe CRUD**  
+  Create, view, update, and delete recipes stored in a Postgres database.
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+- **Dynamic Ingredients & Steps**  
+  Add, remove, and reorder ingredients and preparation steps with drag & drop support.
 
-## Customize configuration
+- **Portion Scaling**  
+  Instantly scale ingredient quantities based on servings.
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+- **Image Upload**  
+  Upload and preview recipe images, stored with public URLs.
 
-## Project Setup
+- **Search & Filter**  
+  Case-insensitive recipe search by title with instant feedback.
 
-```sh
-npm install
-```
+- **Responsive, Clean Design**  
+  Fully responsive layouts styled with Tailwind CSS inspired by mobile UI best-practices.
 
-### Compile and Hot-Reload for Development
+## Planned Features
 
-```sh
-npm run dev
-```
+- **Google Sign-In for easier authentication**
+- **Integrated shopping list functionality**
 
-### Compile and Minify for Production
+## Tech Stack
 
-```sh
-npm run build
-```
+- [Vue.js 3](https://vuejs.org/)
+- [Vite](https://vitejs.dev/)
+- [Pinia (State Management)](https://pinia.vuejs.org/)
+- [Supabase (DB, Auth, Storage)](https://supabase.com/)
+- [Tailwind CSS v4](https://tailwindcss.com/)
 
-### Lint with [ESLint](https://eslint.org/)
+## Getting Started
 
-```sh
-npm run lint
-```
+### Prerequisites
+
+- Node.js (v18+ recommended)
+- Supabase account and project
+
+### Setup
+
+1. **Clone the repo**
+
+- git clone https://github.com/YOUR_USERNAME/mealkeeper.git
+- cd mealkeeper
+
+2. **Install dependencies**
+
+- npm install
+
+3. **Configure Supabase**
+
+- Copy `.env.example` to `.env.local`
+- Add your Supabase URL and anon key to the env file
+
+4. **Run the development server**
+
+- npm run dev
+
+### Supabase database setup
+
+- `recipes` (main table: id, title, portions, image_url, ...)
+- `recipe_ingredients` (linked to recipe_id)
+- `recipe_steps` (linked to recipe_id)
+
+### Features in action
+
+| Feature         | Screenshot                           |
+| --------------- | ------------------------------------ |
+| Authentication  | ![auth](docs/auth.png)               |
+| Add/Edit Recipe | ![form](docs/form.png)               |
+| Recipe Overview | ![overview](docs/recipeoverview.png) |
+| Recipe Detail   | ![detail](docs/recipedetailpage.png) |
+
+## Contributing
+
+Contributions and suggestions are welcome! Open an issue or submit a pull request.
+
+## License
+
+[MIT](LICENSE)
+
+---
+
+**Developed with love by Björn**
