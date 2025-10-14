@@ -53,7 +53,7 @@
     </nav>
 
     <!-- Login/Register form-->
-    <div v-if="!authStore.user" class="max-w-md mx-auto pt-20">
+    <div v-if="!authStore.user" class="max-w-md mx-auto">
       <div class="text-center mb-8">
         <img src="/public/logo.png" alt="MealKeeper" class="w-64 h-64 mx-auto" />
         <h1 class="text-3xl font-bold text-gray-900 mb-2">MealKeeper</h1>
