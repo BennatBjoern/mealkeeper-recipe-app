@@ -112,23 +112,77 @@
                 required
               />
             </div>
-            <div>
+            <div class="relative">
               <input
-                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
-                type="password"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all pr-10"
+                :type="showPasswordRegister ? 'text' : 'password'"
                 v-model="password"
                 placeholder="Passwort"
                 required
               />
+              <button
+                type="button"
+                @click="showPasswordRegister = !showPasswordRegister"
+                class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                aria-label="Passwort anzeigen/ausblenden"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-6 h-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.27 2.943 9.543 7-1.273 4.057-5.065 7-9.543 7-4.477 0-8.268-2.943-9.542-7z"
+                  />
+                </svg>
+              </button>
             </div>
-            <div>
+            <div class="relative">
               <input
-                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
-                type="password"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all pr-10"
+                :type="showPasswordConfirmRegister ? 'text' : 'password'"
                 v-model="passwordConfirm"
                 placeholder="Passwort bestätigen"
                 required
               />
+              <button
+                type="button"
+                @click="showPasswordConfirmRegister = !showPasswordConfirmRegister"
+                class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                aria-label="Passwort bestätigen anzeigen/ausblenden"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-6 h-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.27 2.943 9.543 7-1.273 4.057-5.065 7-9.543 7-4.477 0-8.268-2.943-9.542-7z"
+                  />
+                </svg>
+              </button>
             </div>
             <button
               type="submit"
@@ -152,14 +206,41 @@
                 required
               />
             </div>
-            <div>
+            <div class="relative">
               <input
-                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
-                type="password"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all pr-10"
+                :type="showPasswordLogin ? 'text' : 'password'"
                 v-model="password"
                 placeholder="Passwort"
                 required
               />
+              <button
+                type="button"
+                @click="showPasswordLogin = !showPasswordLogin"
+                class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                aria-label="Passwort anzeigen/ausblenden"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-6 h-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.27 2.943 9.543 7-1.273 4.057-5.065 7-9.543 7-4.477 0-8.268-2.943-9.542-7z"
+                  />
+                </svg>
+              </button>
             </div>
             <button
               type="submit"
@@ -328,6 +409,9 @@ const email = ref('')
 const password = ref('')
 const username = ref('')
 const passwordConfirm = ref('')
+const showPasswordLogin = ref(false)
+const showPasswordRegister = ref(false)
+const showPasswordConfirmRegister = ref(false)
 const authStore = useAuthStore()
 const recipesStore = useRecipesStore()
 const router = useRouter()
