@@ -80,10 +80,7 @@
               :src="recipesStore.currentRecipe.image_url || '/default-recipe.jpg'"
               :alt="recipesStore.currentRecipe.title"
               class="w-full h-full object-cover"
-              @error="
-                $event.target.src =
-                  'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop'
-              "
+              @error="$event.target.src = '/default-recipe.jpg'"
             />
           </div>
 
