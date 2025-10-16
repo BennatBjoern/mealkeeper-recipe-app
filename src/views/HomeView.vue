@@ -355,8 +355,9 @@
           <!-- Recipe Image -->
           <div class="aspect-video bg-gray-200 relative overflow-hidden">
             <img
-              :src="recipe.image_url || '/default-recipe.jpg'"
+              :src="`${recipe.image_url}?width=600&quality=70` || '/default-recipe.jpg'"
               :alt="recipe.title"
+              loading="lazy"
               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
               @error="$event.target.src = '/default-recipe.jpg'"
             />

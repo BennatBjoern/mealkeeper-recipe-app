@@ -77,8 +77,12 @@
           <!-- Recipe Image -->
           <div class="aspect-video bg-gray-200 relative">
             <img
-              :src="recipesStore.currentRecipe.image_url || '/default-recipe.jpg'"
+              :src="
+                `${recipesStore.currentRecipe.image_url}?width=600&quality=70` ||
+                '/default-recipe.jpg'
+              "
               :alt="recipesStore.currentRecipe.title"
+              loading="lazy"
               class="w-full h-full object-cover"
               @error="$event.target.src = '/default-recipe.jpg'"
             />
