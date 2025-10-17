@@ -60,12 +60,7 @@ export const useAuthStore = defineStore('auth', () => {
         loading.value = false
         return
       }
-
-      // User successfully registered
-      if (result.data.user) {
-        user.value = result.data.user
-        console.log('Benutzer erfolgreich registriert')
-      }
+      error.value = null
     } catch (err) {
       error.value = translateSupabaseError(err.message)
     }

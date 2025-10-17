@@ -251,6 +251,12 @@
             </button>
           </form>
         </div>
+        <div
+          v-if="registrationSuccess"
+          class="bg-green-50 border border-green-200 text-green-700 p-3 rounded-lg text-sm mt-4"
+        >
+          Registrierung erfolgreich! Bitte bestätige deine E-Mail.
+        </div>
       </div>
     </div>
 
@@ -418,6 +424,7 @@ const authStore = useAuthStore()
 const recipesStore = useRecipesStore()
 const router = useRouter()
 const searchTerm = ref('')
+const registrationSuccess = ref(false)
 
 // Go to Recipe
 function goToRecipe(recipeId) {
@@ -431,9 +438,15 @@ async function onSearchInput() {
 
 // Register
 async function register() {
+  registrationSuccess.value = false
   await authStore.signUp(email.value, password.value, username.value, passwordConfirm.value)
+
   if (!authStore.error) {
-    console.log('Erfolgreich registriert')
+    registrationSuccess.value = true
+    email.value = ''
+    password.value = ''
+    username.value = ''
+    passwordConfirm.value = ''
   }
 }
 
