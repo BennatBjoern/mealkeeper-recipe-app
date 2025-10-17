@@ -453,15 +453,11 @@ async function register() {
 // Login
 async function login() {
   await authStore.signIn(email.value, password.value)
-  if (authStore.user) {
-    console.log('Erfolgreich eingeloggt')
-  }
 }
 
 // Logout
 async function logout() {
   await authStore.signOut()
-  console.log('Erfolgreich abgemeldet')
 }
 
 // Watch User
