@@ -157,7 +157,9 @@
         <div class="bg-white rounded-xl shadow-sm p-6">
           <h3 class="text-lg font-semibold text-gray-900 mb-4">
             Zutaten
-            <span class="text-sm font-normal text-gray-500">({{ ingredients.length }})</span>
+            <span class="text-sm font-normal text-gray-500"
+              >({{ ingredients.length }} {{ ingredients.length === 1 ? 'Zutat' : 'Zutaten' }})</span
+            >
           </h3>
 
           <!-- Existing Ingredients -->
