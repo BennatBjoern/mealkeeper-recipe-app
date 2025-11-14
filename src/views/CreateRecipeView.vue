@@ -456,6 +456,7 @@ const route = useRoute()
 const isUploading = ref(false)
 const errors = ref({})
 const isEditMode = computed(() => !!route.params.id)
+const LS_KEY = 'mealkeeper-create-recipe'
 
 const isFormValid = computed(() => {
   const hasTitle = title.value && title.value.trim().length > 0 && title.value.length <= 150
@@ -641,6 +642,27 @@ function resetForm() {
   errors.value = {}
 }
 
+function loadFromLocalStorage() {
+  const saved = localStorage.getItem(LS_KEY)
+  if (saved) {
+    try {
+      const data = JSON.parse(saved)
+      title.value = data.title || ''
+      portions.value = data.portions || 2
+      duration.value = data.duration || 30
+      mealType.value = data.mealType || 'Hauptspeise'
+      ingredients.value = data.ingredients || []
+      steps.value = data.steps || []
+      uploadedImageUrl.value = data.uploadedImageUrl || ''
+      imagePreview.value = data.imagePreview || ''
+    } catch (err) {
+      console.error('Fehler beim Laden des localStorage:', err)
+      // Remove localStorage
+      localStorage.removeItem(LS_KEY)
+    }
+  }
+}
+
 async function loadRecipeData() {
   if (!route.params.id) {
     return
@@ -694,6 +716,8 @@ async function saveRecipe() {
     } else {
       // Create route: create new recipe
       savedRecipe = await recipesStore.createRecipe(recipeData, ingredientsData, stepsData)
+      // Remove localStorage
+      localStorage.removeItem(LS_KEY)
     }
 
     resetForm()
@@ -709,6 +733,8 @@ async function saveRecipe() {
 onMounted(() => {
   if (isEditMode.value) {
     loadRecipeData()
+  } else {
+    loadFromLocalStorage()
   }
 })
 
@@ -717,4 +743,37 @@ watch(isEditMode, (newVal) => {
     loadRecipeData()
   }
 })
+
+// Save form on changes
+watch(
+  [title, portions, duration, mealType, ingredients, steps, uploadedImageUrl, imagePreview],
+  ([
+    newTitle,
+    newPortions,
+    newDuration,
+    newMealType,
+    newIngredients,
+    newSteps,
+    newImageUrl,
+    newPreview,
+  ]) => {
+    // Only save if not in edit mode
+    if (!isEditMode.value) {
+      localStorage.setItem(
+        LS_KEY,
+        JSON.stringify({
+          title: newTitle,
+          portions: newPortions,
+          duration: newDuration,
+          mealType: newMealType,
+          ingredients: newIngredients,
+          steps: newSteps,
+          uploadedImageUrl: newImageUrl,
+          imagePreview: newPreview,
+        }),
+      )
+    }
+  },
+  { deep: true },
+)
 </script>
