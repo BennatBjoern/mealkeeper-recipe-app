@@ -147,7 +147,7 @@
               </button>
 
               <span class="text-sm text-gray-600">{{
-                portions === 1 ? 'portion' : 'Portionen'
+                portions === 1 ? 'Portion' : 'Portionen'
               }}</span>
             </div>
           </div>
