@@ -253,7 +253,9 @@
         <div class="bg-white rounded-xl shadow-sm p-6">
           <h3 class="text-lg font-semibold text-gray-900 mb-4">
             Zubereitung
-            <span class="text-sm font-normal text-gray-500">({{ steps.length }} Schritte)</span>
+            <span class="text-sm font-normal text-gray-500"
+              >({{ steps.length }} {{ steps.length === 1 ? 'Schritt' : 'Schritte' }})</span
+            >
           </h3>
 
           <!-- Existing Steps -->
