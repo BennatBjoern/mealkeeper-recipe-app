@@ -230,7 +230,7 @@
               type="text"
               v-model="currentIngredient"
               placeholder="z.B. 200g Mehl"
-              @keyup.enter="addOrUpdateIngredient"
+              @keydown.enter="addOrUpdateIngredient"
             />
             <button
               type="button"
@@ -335,7 +335,7 @@
                   ? 'Schritt bearbeiten'
                   : `Schritt ${steps.length + 1} hinzufügen`
               "
-              @keyup.enter="addOrUpdateStep"
+              @keydown.enter="addOrUpdateStep"
             />
             <button
               type="button"
