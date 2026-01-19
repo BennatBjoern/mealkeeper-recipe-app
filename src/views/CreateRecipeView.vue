@@ -19,7 +19,7 @@
           </h1>
 
           <div class="flex gap-1 md:gap-2">
-            <button
+            <!-- <button
               class="flex items-center gap-1 px-2 md:px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-all text-xs md:text-sm"
               type="button" @click="confirmReset">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -27,7 +27,7 @@
                   d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
               </svg>
               <span class="hidden sm:inline">Zurücksetzen</span>
-            </button>
+            </button> -->
             <button
               class="px-3 md:px-6 py-2 bg-gradient-to-r from-orange-600 to-pink-600 text-white rounded-lg hover:from-orange-700 hover:to-pink-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md text-xs md:text-sm"
               type="button" @click="saveRecipe" form="recipe-form" :disabled="!isFormValid || recipesStore.loading">
@@ -123,7 +123,7 @@
 
               <span class="text-sm text-gray-600">{{
                 portions === 1 ? 'Portion' : 'Portionen'
-              }}</span>
+                }}</span>
             </div>
 
           </div>
@@ -198,7 +198,7 @@
             Zubereitung
             <span class="text-sm font-normal text-gray-500">({{ steps.length }} {{ steps.length === 1 ? 'Schritt' :
               'Schritte'
-              }})</span>
+            }})</span>
           </h3>
 
           <!-- Existing Steps -->
