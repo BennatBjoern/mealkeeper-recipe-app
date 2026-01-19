@@ -249,7 +249,7 @@
             Rezept erstellen
           </router-link>
           <button v-if="selectedCategory !== 'Alle'" @click="selectedCategory = 'Alle'"
-            class="inline-flex items-center px-6 py-3 border-2 border-orange-600 text-orange-600 rounded-lg hover:bg-orange-50 transition-all font-medium">
+            class="inline-flex items-center px-6 py-3 border-2 border-orange-600 text-orange-600 rounded-lg hover:bg-orange-50 transition-all cursor-pointer font-medium">
             Alle anzeigen
           </button>
         </div>
