@@ -1,24 +1,45 @@
 <template>
   <div class="min-h-screen bg-gradient-to-br from-orange-50 via-yellow-50 to-pink-50">
     <!-- Navigation Header -->
-    <nav class="flex justify-between items-center p-4 bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
-      <button class="flex items-center px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors" type="button"
-        @click="goBack">
-        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-        </svg>
-        Zurück
-      </button>
+    <nav class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
+      <div class="max-w-2xl mx-auto px-3 md:px-6 py-3 md:py-4">
+        <div class="flex justify-between items-center">
+          <button
+            class="flex items-center px-2 md:px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors text-sm md:text-base"
+            type="button" @click="goBack">
+            <svg class="w-5 h-5 mr-1 md:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+            <span class="hidden sm:inline">Zurück</span>
+          </button>
 
-      <h1 class="text-lg font-semibold bg-gradient-to-r from-orange-600 to-pink-600 bg-clip-text text-transparent">
-        Rezept erstellen</h1>
+          <h1
+            class="text-base md:text-lg font-semibold bg-gradient-to-r from-orange-600 to-pink-600 bg-clip-text text-transparent">
+            {{ isEditMode ? 'Rezept bearbeiten' : 'Rezept erstellen' }}
+          </h1>
 
-      <button
-        class="px-6 py-2 bg-gradient-to-r from-orange-600 to-pink-600 text-white rounded-lg hover:from-orange-700 hover:to-pink-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md"
-        type="button" @click="saveRecipe" form="recipe-form" :disabled="!isFormValid || recipesStore.loading">
-        {{ recipesStore.loading ? 'Speichere...' : 'Speichern' }}
-      </button>
+          <div class="flex gap-1 md:gap-2">
+            <button
+              class="flex items-center gap-1 px-2 md:px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-all text-xs md:text-sm"
+              type="button" @click="confirmReset">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+              <span class="hidden sm:inline">Zurücksetzen</span>
+            </button>
+            <button
+              class="px-3 md:px-6 py-2 bg-gradient-to-r from-orange-600 to-pink-600 text-white rounded-lg hover:from-orange-700 hover:to-pink-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md text-xs md:text-sm"
+              type="button" @click="saveRecipe" form="recipe-form" :disabled="!isFormValid || recipesStore.loading">
+              {{ recipesStore.loading ? 'Speichere...' : 'Speichern' }}
+            </button>
+          </div>
+        </div>
+      </div>
     </nav>
+
+
+
 
     <div class="max-w-2xl mx-auto p-6">
       <form class="space-y-8" id="recipe-form" @submit.prevent="saveRecipe">
@@ -82,18 +103,18 @@
             <label class="block text-sm font-medium text-gray-700 mb-2">Portionen</label>
             <div class="flex items-center space-x-3">
               <button type="button" @click="portions > 1 && portions--" :disabled="portions <= 1"
-                class="w-10 h-10 rounded-full bg-gradient-to-r from-orange-100 to-pink-100 hover:from-orange-200 hover:to-pink-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center text-orange-600 font-bold transition-all">
+                class="w-12 h-12 md:w-10 md:h-10 rounded-full bg-gradient-to-r from-orange-100 to-pink-100 hover:from-orange-200 hover:to-pink-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center text-orange-600 font-bold transition-all">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
                 </svg>
               </button>
 
               <input
-                class="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none w-20 px-3 py-2 text-center border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none"
+                class="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none w-20 px-3 py-3 text-center border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none text-lg md:text-base"
                 type="number" v-model.number="portions" min="1" />
 
               <button type="button" @click="portions++"
-                class="w-10 h-10 rounded-full bg-gradient-to-r from-orange-100 to-pink-100 hover:from-orange-200 hover:to-pink-200 flex items-center justify-center text-orange-600 font-bold transition-all">
+                class="w-12 h-12 md:w-10 md:h-10 rounded-full bg-gradient-to-r from-orange-100 to-pink-100 hover:from-orange-200 hover:to-pink-200 flex items-center justify-center text-orange-600 font-bold transition-all">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6">
                   </path>
@@ -102,8 +123,9 @@
 
               <span class="text-sm text-gray-600">{{
                 portions === 1 ? 'Portion' : 'Portionen'
-                }}</span>
+              }}</span>
             </div>
+
           </div>
         </div>
 
@@ -153,20 +175,21 @@
           </draggable>
 
           <!-- Add Ingredient -->
-          <div class="flex space-x-2">
+          <div class="flex flex-col sm:flex-row gap-2">
             <input
               class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all"
               type="text" v-model="currentIngredient" placeholder="z.B. 200g Mehl"
               @keydown.enter="addOrUpdateIngredient" />
             <button type="button" @click="addOrUpdateIngredient" :disabled="!currentIngredient.trim()"
-              class="px-4 py-3 bg-gradient-to-r from-orange-600 to-pink-600 text-white rounded-lg hover:from-orange-700 hover:to-pink-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md">
+              class="px-4 py-3 bg-gradient-to-r from-orange-600 to-pink-600 text-white rounded-lg hover:from-orange-700 hover:to-pink-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md whitespace-nowrap">
               {{ editingIngredientIndex !== null ? 'Aktualisieren' : 'Hinzufügen' }}
             </button>
             <button v-if="editingIngredientIndex !== null" type="button" @click="cancelEditIngredient"
-              class="px-4 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-all">
+              class="px-4 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-all whitespace-nowrap">
               Abbrechen
             </button>
           </div>
+
         </div>
 
         <!-- Steps Section -->
@@ -219,21 +242,23 @@
           </draggable>
 
           <!-- Add Step -->
-          <div class="flex space-x-2">
-            <input
-              class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all"
-              type="text" v-model="currentStep" :placeholder="editingStepIndex !== null
+          <div class="flex flex-col gap-2">
+            <textarea
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all resize-y min-h-[80px]"
+              v-model="currentStep" :placeholder="editingStepIndex !== null
                 ? 'Schritt bearbeiten'
                 : `Schritt ${steps.length + 1} hinzufügen`
-                " @keydown.enter="addOrUpdateStep" />
-            <button type="button" @click="addOrUpdateStep" :disabled="!currentStep.trim()"
-              class="px-4 py-3 bg-gradient-to-r from-orange-600 to-pink-600 text-white rounded-lg hover:from-orange-700 hover:to-pink-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md">
-              {{ editingStepIndex !== null ? 'Aktualisieren' : 'Hinzufügen' }}
-            </button>
-            <button v-if="editingStepIndex !== null" type="button" @click="cancelEditStep"
-              class="px-4 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-all">
-              Abbrechen
-            </button>
+                " @keydown.enter.prevent="addOrUpdateStep" rows="3"></textarea>
+            <div class="flex flex-col sm:flex-row gap-2">
+              <button type="button" @click="addOrUpdateStep" :disabled="!currentStep.trim()"
+                class="px-4 py-3 bg-gradient-to-r from-orange-600 to-pink-600 text-white rounded-lg hover:from-orange-700 hover:to-pink-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md whitespace-nowrap flex-1 sm:flex-initial">
+                {{ editingStepIndex !== null ? 'Aktualisieren' : 'Hinzufügen' }}
+              </button>
+              <button v-if="editingStepIndex !== null" type="button" @click="cancelEditStep"
+                class="px-4 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-all whitespace-nowrap flex-1 sm:flex-initial">
+                Abbrechen
+              </button>
+            </div>
           </div>
         </div>
 

@@ -4,30 +4,31 @@
     <nav v-if="authStore.user" class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
       <div class="max-w-6xl mx-auto px-4">
         <div class="flex items-center justify-between h-16">
-          <div class="flex items-center space-x-8">
-            <router-link to="/" class="px-3 py-2 text-gray-600 font-medium border-b-2 border-transparent">
-              <h1 class="text-xl font-bold bg-gradient-to-r from-orange-600 to-pink-600 bg-clip-text text-transparent">
+          <div class="flex items-center space-x-2 md:space-x-8">
+            <router-link to="/" class="px-2 md:px-3 py-2 text-gray-600 font-medium border-b-2 border-transparent">
+              <h1
+                class="text-lg md:text-xl font-bold bg-gradient-to-r from-orange-600 to-pink-600 bg-clip-text text-transparent">
                 🍳 MealKeeper</h1>
             </router-link>
           </div>
-          <div class="flex space-x-2">
+          <div class="flex space-x-1 md:space-x-2">
             <router-link to="/create"
-              class="flex items-center gap-1 bg-gradient-to-r from-orange-600 to-pink-600 text-white px-4 py-2 rounded-lg hover:from-orange-700 hover:to-pink-700 transition-all text-sm font-medium shadow-md">
+              class="flex items-center gap-1 bg-gradient-to-r from-orange-600 to-pink-600 text-white px-2 md:px-4 py-2 rounded-lg hover:from-orange-700 hover:to-pink-700 transition-all text-xs md:text-sm font-medium shadow-md">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
                 </path>
               </svg>
-              Erstellen
+              <span class="sm:inline">Erstellen</span>
             </router-link>
             <button @click="logout"
-              class="flex items-center gap-1 cursor-pointer bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors text-sm font-medium">
+              class="flex items-center gap-1 cursor-pointer bg-red-600 text-white px-2 md:px-4 py-2 rounded-lg hover:bg-red-700 transition-colors text-xs md:text-sm font-medium">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2"
                 viewBox="0 0 24 24" class="w-4 h-4">
                 <path stroke-linecap="round" stroke-linejoin="round"
                   d="M17 16l4-4m0 0l-4-4m4 4H7m5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h3a3 3 0 013 3v1" />
               </svg>
-              Abmelden
+              <span class="sm:inline">Abmelden</span>
             </button>
           </div>
         </div>
@@ -181,7 +182,7 @@
             </div>
             <div class="flex flex-wrap gap-2">
               <button v-for="category in categories" :key="category" @click="selectedCategory = category" :class="[
-                'px-4 py-2 rounded-lg text-sm font-medium transition-all :hover cursor-pointer',
+                'px-3 py-1.5 md:px-4 md:py-2 rounded-lg text-xs md:text-sm font-medium transition-all whitespace-nowrap',
                 selectedCategory === category
                   ? 'bg-gradient-to-r from-orange-600 to-pink-600 text-white shadow-md'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -196,6 +197,7 @@
               </button>
             </div>
           </div>
+
         </div>
       </div>
 

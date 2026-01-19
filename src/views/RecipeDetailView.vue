@@ -1,41 +1,42 @@
 <template>
   <div class="min-h-screen bg-gradient-to-br from-orange-50 via-yellow-50 to-pink-50">
     <nav class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
-      <div class="max-w-4xl mx-auto px-4">
+      <div class="max-w-4xl mx-auto px-2 md:px-4">
         <div class="flex items-center justify-between h-16">
           <button @click="router.push('/recipes')"
-            class="flex items-center cursor-pointer px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors">
-            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            class="flex items-center cursor-pointer px-2 md:px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors text-sm md:text-base">
+            <svg class="w-5 h-5 mr-1 md:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
             </svg>
-            Zurück
+            <span class="sm:inline">Zurück</span>
           </button>
 
-          <div class="flex space-x-2">
+          <div class="flex space-x-1 md:space-x-2">
             <button
-              class="flex items-center gap-1 cursor-pointer bg-gradient-to-r from-orange-600 to-pink-600 text-white px-4 py-2 rounded-lg hover:from-orange-700 hover:to-pink-700 transition-all text-sm font-medium shadow-md"
+              class="flex items-center gap-1 cursor-pointer bg-gradient-to-r from-orange-600 to-pink-600 text-white px-2 md:px-4 py-2 rounded-lg hover:from-orange-700 hover:to-pink-700 transition-all text-xs md:text-sm font-medium shadow-md"
               @click="editRecipe">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
                 </path>
               </svg>
-              Bearbeiten
+              <span class="sm:inline">Bearbeiten</span>
             </button>
             <button
-              class="flex items-center gap-1 cursor-pointer bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors text-sm font-medium shadow-md"
+              class="flex items-center gap-1 cursor-pointer bg-red-600 text-white px-2 md:px-4 py-2 rounded-lg hover:bg-red-700 transition-colors text-xs md:text-sm font-medium shadow-md"
               @click="confirmDelete">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
                 </path>
               </svg>
-              Löschen
+              <span class="sm:inline">Löschen</span>
             </button>
           </div>
         </div>
       </div>
     </nav>
+
 
     <div class="max-w-4xl mx-auto p-6">
       <!-- Loading State -->
@@ -116,19 +117,20 @@
 
           <div class="flex items-center space-x-3 mb-6">
             <button @click="currentPortions > 1 && currentPortions--"
-              class="w-10 h-10 rounded-full bg-gradient-to-r from-orange-100 to-pink-100 hover:from-orange-200 hover:to-pink-200 disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center text-orange-600 font-bold transition-all"
+              class="w-12 h-12 md:w-10 md:h-10 rounded-full bg-gradient-to-r from-orange-100 to-pink-100 hover:from-orange-200 hover:to-pink-200 disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center text-orange-600 font-bold transition-all text-xl md:text-base"
               :disabled="currentPortions <= 1">
               -
             </button>
 
             <input type="number" v-model.number="currentPortions" min="1"
-              class="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none w-20 text-center border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none" />
+              class="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none w-20 md:w-20 text-center border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none text-lg md:text-base py-2" />
 
             <button @click="currentPortions++"
-              class="w-10 h-10 rounded-full bg-gradient-to-r from-orange-100 to-pink-100 hover:from-orange-200 hover:to-pink-200 flex justify-center items-center text-orange-600 font-bold transition-all">
+              class="w-12 h-12 md:w-10 md:h-10 rounded-full bg-gradient-to-r from-orange-100 to-pink-100 hover:from-orange-200 hover:to-pink-200 flex justify-center items-center text-orange-600 font-bold transition-all text-xl md:text-base">
               +
             </button>
           </div>
+
 
           <div class="space-y-3">
             <div v-for="(ingredient, index) in adjustedIngredients" :key="index"

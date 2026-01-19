@@ -2,23 +2,26 @@
   <div class="min-h-screen bg-gradient-to-br from-orange-50 via-yellow-50 to-pink-50 overflow-x-hidden">
     <!-- Navigation -->
     <nav class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
-      <div class="max-w-6xl mx-auto px-6 py-4">
+      <div class="max-w-6xl mx-auto px-4 md:px-6 py-3 md:py-4">
         <div class="flex items-center justify-between">
-          <h1 class="text-2xl font-bold bg-gradient-to-r from-orange-600 to-pink-600 bg-clip-text text-transparent">
+          <h1
+            class="text-lg md:text-2xl font-bold bg-gradient-to-r from-orange-600 to-pink-600 bg-clip-text text-transparent">
             🍳 MealKeeper
           </h1>
-          <div class="flex space-x-4">
+          <div class="flex space-x-2 md:space-x-4">
             <button v-if="!authStore.user" @click="showLogin = true"
-              class="px-6 py-2 text-orange-600 font-medium hover:text-orange-700 cursor-pointer transition-colors">
+              class="px-3 md:px-6 py-2 text-orange-600 font-medium hover:text-orange-700 cursor-pointer transition-colors text-sm md:text-base">
               Anmelden
             </button>
             <button v-if="!authStore.user" @click="showRegister = true"
-              class="px-6 py-2 bg-gradient-to-r from-orange-600 to-pink-600 text-white font-medium rounded-xl hover:from-orange-700 hover:to-pink-700 cursor-pointer transition-all shadow-lg">
-              Jetzt starten
+              class="px-3 md:px-6 py-2 bg-gradient-to-r from-orange-600 to-pink-600 text-white font-medium rounded-xl hover:from-orange-700 hover:to-pink-700 cursor-pointer transition-all shadow-lg text-sm md:text-base">
+              <span class="hidden sm:inline">Jetzt starten</span>
+              <span class="sm:hidden">Jetzt starten</span>
             </button>
             <router-link v-else to="/recipes"
-              class="px-6 py-2 bg-gradient-to-r from-orange-600 to-pink-600 text-white font-medium rounded-xl hover:from-orange-700 hover:to-pink-700 transition-all shadow-lg">
-              Zu meinen Rezepten
+              class="px-3 md:px-6 py-2 bg-gradient-to-r from-orange-600 to-pink-600 text-white font-medium rounded-xl hover:from-orange-700 hover:to-pink-700 transition-all shadow-lg text-sm md:text-base">
+              <span class="hidden sm:inline">Zu meinen Rezepten</span>
+              <span class="sm:hidden">Meine Rezepte</span>
             </router-link>
           </div>
         </div>
