@@ -263,8 +263,8 @@
           class="bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-200 cursor-pointer group overflow-hidden">
           <!-- Recipe Image -->
           <div class="aspect-video bg-gray-200 relative overflow-hidden">
-            <img :src="`${recipe.image_url}?width=600&quality=70` || '/default-recipe.jpg'" :alt="recipe.title"
-              loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+            <img :src="`${recipe.image_url}` || '/default-recipe.jpg'" :alt="recipe.title" loading="lazy"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
               @error="$event.target.src = '/default-recipe.jpg'" />
             <div class="absolute top-3 left-3 right-3 flex justify-between items-start">
               <!-- Duration Badge left -->
