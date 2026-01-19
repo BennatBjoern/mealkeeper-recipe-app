@@ -161,15 +161,44 @@
         <p class="text-gray-600">Verwalte und entdecke deine Lieblingsrezepte</p>
       </div>
 
-      <!-- Search Section -->
+      <!-- Search & Filter Section -->
       <div class="bg-white/80 backdrop-blur-md rounded-xl shadow-sm p-6 mb-6">
-        <div class="flex flex-col md:flex-row gap-4">
+        <div class="flex flex-col gap-4">
+          <!-- Search Bar -->
           <div class="flex-1">
             <input type="text" placeholder="Rezepte durchsuchen..." v-model="searchTerm" @input="onSearchInput"
               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all" />
           </div>
+
+          <!-- Category Filter -->
+          <div>
+            <div class="flex items-center gap-2 mb-2">
+              <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+              </svg>
+              <span class="text-sm font-medium text-gray-700">Kategorie</span>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <button v-for="category in categories" :key="category" @click="selectedCategory = category" :class="[
+                'px-4 py-2 rounded-lg text-sm font-medium transition-all :hover cursor-pointer',
+                selectedCategory === category
+                  ? 'bg-gradient-to-r from-orange-600 to-pink-600 text-white shadow-md'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              ]">
+                {{ category }}
+                <span v-if="category === 'Alle'" class="ml-1 text-xs opacity-75">
+                  ({{ recipesStore.recipes.length }})
+                </span>
+                <span v-else class="ml-1 text-xs opacity-75">
+                  ({{recipesStore.recipes.filter(r => r.meal_type === category).length}})
+                </span>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
+
 
       <!-- Loading State -->
       <div v-if="recipesStore.loading" class="text-center py-12">
@@ -191,7 +220,7 @@
       </div>
 
       <!-- Empty State -->
-      <div v-else-if="recipesStore.recipes.length === 0" class="text-center py-12">
+      <div v-else-if="filteredRecipes.length === 0" class="text-center py-12">
         <div
           class="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-orange-100 to-pink-100 rounded-full flex items-center justify-center">
           <svg class="w-12 h-12 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -200,20 +229,37 @@
             </path>
           </svg>
         </div>
-        <h3 class="text-xl font-semibold text-gray-900 mb-2">Noch keine Rezepte vorhanden</h3>
-        <p class="text-gray-600 mb-6">Erstelle dein erstes Rezept und baue deine Sammlung auf!</p>
-        <router-link to="/create"
-          class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-orange-600 to-pink-600 text-white rounded-lg hover:from-orange-700 hover:to-pink-700 transition-all font-medium shadow-md">
-          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-          </svg>
-          Erstes Rezept erstellen
-        </router-link>
+        <h3 class="text-xl font-semibold text-gray-900 mb-2">
+          {{ selectedCategory === 'Alle'
+            ? 'Noch keine Rezepte vorhanden'
+            : `Keine Rezepte in der Kategorie"${selectedCategory}"` }}
+        </h3>
+        <p class="text-gray-600 mb-6">
+          {{ selectedCategory === 'Alle'
+            ? 'Erstelle dein erstes Rezept und baue deine Sammlung auf!'
+            : 'Probiere eine andere Kategorie aus oder erstelle ein neues Rezept.' }}
+        </p>
+        <div class="flex justify-center gap-3">
+          <router-link to="/create"
+            class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-orange-600 to-pink-600 text-white rounded-lg hover:from-orange-700 hover:to-pink-700 transition-all font-medium shadow-md">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6">
+              </path>
+            </svg>
+            Rezept erstellen
+          </router-link>
+          <button v-if="selectedCategory !== 'Alle'" @click="selectedCategory = 'Alle'"
+            class="inline-flex items-center px-6 py-3 border-2 border-orange-600 text-orange-600 rounded-lg hover:bg-orange-50 transition-all font-medium">
+            Alle anzeigen
+          </button>
+        </div>
       </div>
+
+
 
       <!-- Recipe Grid -->
       <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div @click="goToRecipe(recipe.id)" v-for="recipe in recipesStore.recipes" :key="recipe.id"
+        <div @click="goToRecipe(recipe.id)" v-for="recipe in filteredRecipes" :key="recipe.id"
           class="bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-200 cursor-pointer group overflow-hidden">
           <!-- Recipe Image -->
           <div class="aspect-video bg-gray-200 relative overflow-hidden">
@@ -252,7 +298,7 @@
 <script setup>
 import logoUrl from '@/assets/logo.png'
 import { useAuthStore } from '@/stores/auth'
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
 import { useRecipesStore } from '@/stores/recipes'
 import { useRouter } from 'vue-router'
 
@@ -269,6 +315,22 @@ const recipesStore = useRecipesStore()
 const router = useRouter()
 const searchTerm = ref('')
 const registrationSuccess = ref(false)
+
+// Filter State
+const selectedCategory = ref('Alle')
+const categories = ['Alle', 'Frühstück', 'Vorspeise', 'Hauptspeise', 'Beilage', 'Dessert', 'Snack']
+
+// Filtered Recipes
+const filteredRecipes = computed(() => {
+  let recipes = recipesStore.recipes || []
+
+  // Filter by category
+  if (selectedCategory.value !== 'Alle') {
+    recipes = recipes.filter(recipe => recipe.meal_type === selectedCategory.value)
+  }
+
+  return recipes
+})
 
 // Go to Recipe
 function goToRecipe(recipeId) {
