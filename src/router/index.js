@@ -12,7 +12,6 @@ const router = createRouter({
       path: '/',
       name: 'Landing',
       component: LandingPage,
-      meta: { requiresGuest: true }
     },
     {
       path: '/recipes',
@@ -61,10 +60,6 @@ router.beforeEach(async (to, from, next) => {
   if (to.meta.requiresAuth && !authStore.user) {
     next('/')
   }
-  // If route is guest-only (landing page) and user is logged in, redirect to recipes
-  else if (to.meta.requiresGuest && authStore.user) {
-    next('/recipes')
-  } 
   // Allow access to the route
   else {
     next()

@@ -5,7 +5,7 @@
       <div class="max-w-6xl mx-auto px-4">
         <div class="flex items-center justify-between h-16">
           <div class="flex items-center space-x-8">
-            <router-link to="/recipes" class="px-3 py-2 text-gray-600 font-medium border-b-2 border-transparent">
+            <router-link to="/" class="px-3 py-2 text-gray-600 font-medium border-b-2 border-transparent">
               <h1 class="text-xl font-bold bg-gradient-to-r from-orange-600 to-pink-600 bg-clip-text text-transparent">
                 🍳 MealKeeper</h1>
             </router-link>
