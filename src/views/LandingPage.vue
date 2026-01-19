@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-orange-50 via-yellow-50 to-pink-50">
+  <div class="min-h-screen bg-gradient-to-br from-orange-50 via-yellow-50 to-pink-50 overflow-x-hidden">
     <!-- Navigation -->
     <nav class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
       <div class="max-w-6xl mx-auto px-6 py-4">
