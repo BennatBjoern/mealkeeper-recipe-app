@@ -1,45 +1,63 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
+import LandingPage from '@/views/LandingPage.vue'
+import HomeView from '@/views/HomeView.vue'
+import CreateRecipeView from '@/views/CreateRecipeView.vue'
+import RecipeDetailView from '@/views/RecipeDetailView.vue'
 
+// Router configuration
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: () => import('@/views/HomeView.vue'),
+      name: 'Landing',
+      component: LandingPage,
+      meta: { requiresGuest: true }
+    },
+    {
+      path: '/recipes',
+      name: 'Home',
+      component: HomeView,
+      meta: { requiresAuth: true }
     },
     {
       path: '/create',
-      name: 'create',
-      component: () => import('@/views/CreateRecipeView.vue'),
-      meta: { requiresAuth: true },
+      name: 'CreateRecipe',
+      component: CreateRecipeView,
+      meta: { requiresAuth: true }
     },
     {
       path: '/recipes/:id',
-      name: 'recipe-detail',
-      component: () => import('../views/RecipeDetailView.vue'),
-      meta: { requiresAuth: true },
+      name: 'RecipeDetail',
+      component: RecipeDetailView,
+      meta: { requiresAuth: true }
     },
     {
       path: '/recipes/:id/edit',
-      name: 'recipe-edit',
-      component: () => import('../views/CreateRecipeView.vue'),
-      meta: { requiresAuth: true },
-    },
+      name: 'EditRecipe',
+      component: CreateRecipeView,
+      meta: { requiresAuth: true }
+    }
   ],
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    }
+    return { top: 0 }
+  }
 })
 
-// Check if the user is authenticated
-router.beforeEach(async (to, from, next) => {
+// Navigation Guards
+router.beforeEach((to, from, next) => {
   const authStore = useAuthStore()
-  const requiresAuth = to.meta.requiresAuth
-  while (!authStore.isInitialized) {
-    await new Promise((resolve) => setTimeout(resolve, 50))
-  }
-  if (requiresAuth && !authStore.user) {
+  
+  // If the route requires authentication and the user is not logged in, redirect to the landing page
+  if (to.meta.requiresAuth && !authStore.user) {
     next('/')
-  } else {
+  }
+  // If the route does not require authentication, allow access
+  else {
     next()
   }
 })

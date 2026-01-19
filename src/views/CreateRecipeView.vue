@@ -1,32 +1,21 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
+  <div class="min-h-screen bg-gradient-to-br from-orange-50 via-yellow-50 to-pink-50">
     <!-- Navigation Header -->
-    <nav class="flex justify-between items-center p-4 bg-white border-b shadow-sm">
-      <button
-        class="flex items-center px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors"
-        type="button"
-        @click="goBack"
-      >
+    <nav class="flex justify-between items-center p-4 bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
+      <button class="flex items-center px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors" type="button"
+        @click="goBack">
         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M15 19l-7-7 7-7"
-          ></path>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
         </svg>
         Zurück
       </button>
 
-      <h1 class="text-lg font-semibold text-gray-900">Rezept erstellen</h1>
+      <h1 class="text-lg font-semibold bg-gradient-to-r from-orange-600 to-pink-600 bg-clip-text text-transparent">
+        Rezept erstellen</h1>
 
       <button
-        class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
-        type="button"
-        @click="saveRecipe"
-        form="recipe-form"
-        :disabled="!isFormValid || recipesStore.loading"
-      >
+        class="px-6 py-2 bg-gradient-to-r from-orange-600 to-pink-600 text-white rounded-lg hover:from-orange-700 hover:to-pink-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md"
+        type="button" @click="saveRecipe" form="recipe-form" :disabled="!isFormValid || recipesStore.loading">
         {{ recipesStore.loading ? 'Speichere...' : 'Speichern' }}
       </button>
     </nav>
@@ -34,26 +23,18 @@
     <div class="max-w-2xl mx-auto p-6">
       <form class="space-y-8" id="recipe-form" @submit.prevent="saveRecipe">
         <!-- General Error -->
-        <div
-          v-if="errors.general"
-          class="bg-red-50 border border-red-200 text-red-700 p-4 rounded-lg"
-        >
+        <div v-if="errors.general" class="bg-red-50 border border-red-200 text-red-700 p-4 rounded-lg">
           {{ errors.general }}
         </div>
 
         <!-- Title Section -->
-        <div class="bg-white rounded-xl shadow-sm p-6">
+        <div class="bg-white/80 backdrop-blur-md rounded-xl shadow-lg p-6">
           <label for="title" class="block text-sm font-medium text-gray-700 mb-2">
             Rezepttitel *
           </label>
           <input
-            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
-            id="title"
-            type="text"
-            v-model="title"
-            placeholder="Wie heißt dein Rezept?"
-            maxlength="150"
-          />
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all"
+            id="title" type="text" v-model="title" placeholder="Wie heißt dein Rezept?" maxlength="150" />
           <div class="flex justify-between mt-1">
             <div v-if="errors.title" class="text-red-600 text-sm">{{ errors.title }}</div>
             <div class="text-sm text-gray-500">{{ title.length }}/150</div>
@@ -61,7 +42,7 @@
         </div>
 
         <!-- Basic Info Section -->
-        <div class="bg-white rounded-xl shadow-sm p-6">
+        <div class="bg-white/80 backdrop-blur-md rounded-xl shadow-lg p-6">
           <h3 class="text-lg font-semibold text-gray-900 mb-4">Grundinformationen</h3>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -70,13 +51,8 @@
                 Dauer in Minuten *
               </label>
               <input
-                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
-                id="duration"
-                type="number"
-                v-model.number="duration"
-                placeholder="z.B. 30"
-                min="1"
-              />
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all"
+                id="duration" type="number" v-model.number="duration" placeholder="z.B. 30" min="1" />
               <div v-if="errors.duration" class="text-red-600 text-sm mt-1">
                 {{ errors.duration }}
               </div>
@@ -86,11 +62,8 @@
               <label for="mealType" class="block text-sm font-medium text-gray-700 mb-2">
                 Mahlzeit *
               </label>
-              <select
-                id="mealType"
-                v-model="mealType"
-                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
-              >
+              <select id="mealType" v-model="mealType"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all">
                 <option value="Frühstück">Frühstück</option>
                 <option value="Vorspeise">Vorspeise</option>
                 <option value="Hauptspeise">Hauptspeise</option>
@@ -108,114 +81,70 @@
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">Portionen</label>
             <div class="flex items-center space-x-3">
-              <button
-                type="button"
-                @click="portions > 1 && portions--"
-                :disabled="portions <= 1"
-                class="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center text-gray-600 transition-colors"
-              >
+              <button type="button" @click="portions > 1 && portions--" :disabled="portions <= 1"
+                class="w-10 h-10 rounded-full bg-gradient-to-r from-orange-100 to-pink-100 hover:from-orange-200 hover:to-pink-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center text-orange-600 font-bold transition-all">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M20 12H4"
-                  ></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
                 </svg>
               </button>
 
               <input
-                class="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none w-20 px-3 py-2 text-center border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                type="number"
-                v-model.number="portions"
-                min="1"
-              />
+                class="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none w-20 px-3 py-2 text-center border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none"
+                type="number" v-model.number="portions" min="1" />
 
-              <button
-                type="button"
-                @click="portions++"
-                class="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600 transition-colors"
-              >
+              <button type="button" @click="portions++"
+                class="w-10 h-10 rounded-full bg-gradient-to-r from-orange-100 to-pink-100 hover:from-orange-200 hover:to-pink-200 flex items-center justify-center text-orange-600 font-bold transition-all">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                  ></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6">
+                  </path>
                 </svg>
               </button>
 
               <span class="text-sm text-gray-600">{{
                 portions === 1 ? 'Portion' : 'Portionen'
-              }}</span>
+                }}</span>
             </div>
           </div>
         </div>
 
         <!-- Ingredients Section -->
-        <div class="bg-white rounded-xl shadow-sm p-6">
+        <div class="bg-white/80 backdrop-blur-md rounded-xl shadow-lg p-6">
           <h3 class="text-lg font-semibold text-gray-900 mb-4">
             Zutaten
-            <span class="text-sm font-normal text-gray-500"
-              >({{ ingredients.length }} {{ ingredients.length === 1 ? 'Zutat' : 'Zutaten' }})</span
-            >
+            <span class="text-sm font-normal text-gray-500">({{ ingredients.length }} {{ ingredients.length === 1 ?
+              'Zutat' : 'Zutaten' }})</span>
           </h3>
 
           <!-- Existing Ingredients -->
-          <draggable
-            v-model="ingredients"
-            handle=".drag-handle"
-            animation="150"
-            item-key="index"
-            class="space-y-3 mb-4"
-            v-if="ingredients.length > 0"
-          >
+          <draggable v-model="ingredients" handle=".drag-handle" animation="150" item-key="index" class="space-y-3 mb-4"
+            v-if="ingredients.length > 0">
             <template #item="{ element: ingredient, index }">
-              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg border">
+              <div
+                class="flex items-center justify-between p-3 bg-gradient-to-r from-orange-50 to-pink-50 rounded-lg border border-orange-200">
                 <!-- Drag Handle -->
-                <div class="drag-handle cursor-move p-1 text-gray-400 hover:text-gray-600">
+                <div class="drag-handle cursor-move p-1 text-orange-400 hover:text-orange-600">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M4 8h16M4 16h16"
-                    ></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"></path>
                   </svg>
                 </div>
 
                 <span class="flex-1 mx-3 text-gray-900">{{ ingredient }}</span>
 
                 <div class="flex items-center space-x-2">
-                  <button
-                    type="button"
-                    @click="editIngredient(index)"
-                    class="p-1 text-blue-600 hover:text-blue-800 transition-colors"
-                    title="Bearbeiten"
-                  >
+                  <button type="button" @click="editIngredient(index)"
+                    class="p-1 text-orange-600 hover:text-orange-800 transition-colors" title="Bearbeiten">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                      ></path>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
+                      </path>
                     </svg>
                   </button>
-                  <button
-                    type="button"
-                    @click="removeIngredient(index)"
-                    class="p-1 text-red-600 hover:text-red-800 transition-colors"
-                    title="Löschen"
-                  >
+                  <button type="button" @click="removeIngredient(index)"
+                    class="p-1 text-red-600 hover:text-red-800 transition-colors" title="Löschen">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                      ></path>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                      </path>
                     </svg>
                   </button>
                 </div>
@@ -226,97 +155,62 @@
           <!-- Add Ingredient -->
           <div class="flex space-x-2">
             <input
-              class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
-              type="text"
-              v-model="currentIngredient"
-              placeholder="z.B. 200g Mehl"
-              @keydown.enter="addOrUpdateIngredient"
-            />
-            <button
-              type="button"
-              @click="addOrUpdateIngredient"
-              :disabled="!currentIngredient.trim()"
-              class="px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
-            >
+              class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all"
+              type="text" v-model="currentIngredient" placeholder="z.B. 200g Mehl"
+              @keydown.enter="addOrUpdateIngredient" />
+            <button type="button" @click="addOrUpdateIngredient" :disabled="!currentIngredient.trim()"
+              class="px-4 py-3 bg-gradient-to-r from-orange-600 to-pink-600 text-white rounded-lg hover:from-orange-700 hover:to-pink-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md">
               {{ editingIngredientIndex !== null ? 'Aktualisieren' : 'Hinzufügen' }}
             </button>
-            <button
-              v-if="editingIngredientIndex !== null"
-              type="button"
-              @click="cancelEditIngredient"
-              class="px-4 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-all"
-            >
+            <button v-if="editingIngredientIndex !== null" type="button" @click="cancelEditIngredient"
+              class="px-4 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-all">
               Abbrechen
             </button>
           </div>
         </div>
 
         <!-- Steps Section -->
-        <div class="bg-white rounded-xl shadow-sm p-6">
+        <div class="bg-white/80 backdrop-blur-md rounded-xl shadow-lg p-6">
           <h3 class="text-lg font-semibold text-gray-900 mb-4">
             Zubereitung
-            <span class="text-sm font-normal text-gray-500"
-              >({{ steps.length }} {{ steps.length === 1 ? 'Schritt' : 'Schritte' }})</span
-            >
+            <span class="text-sm font-normal text-gray-500">({{ steps.length }} {{ steps.length === 1 ? 'Schritt' :
+              'Schritte'
+              }})</span>
           </h3>
 
           <!-- Existing Steps -->
-          <draggable
-            v-model="steps"
-            handle=".drag-handle"
-            animation="150"
-            item-key="index"
-            class="space-y-3 mb-4"
-            v-if="steps.length > 0"
-          >
+          <draggable v-model="steps" handle=".drag-handle" animation="150" item-key="index" class="space-y-3 mb-4"
+            v-if="steps.length > 0">
             <template #item="{ element: step, index }">
-              <div class="flex items-start justify-between p-3 bg-gray-50 rounded-lg border">
+              <div
+                class="flex items-start justify-between p-3 bg-gradient-to-r from-orange-50 to-pink-50 rounded-lg border border-orange-200">
                 <!-- Drag Handle -->
-                <div class="drag-handle cursor-move p-1 text-gray-400 hover:text-gray-600 mt-1">
+                <div class="drag-handle cursor-move p-1 text-orange-400 hover:text-orange-600 mt-1">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M4 8h16M4 16h16"
-                    ></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"></path>
                   </svg>
                 </div>
 
                 <div class="flex-1 mx-3">
-                  <div class="text-sm font-medium text-blue-600 mb-1">Schritt {{ index + 1 }}</div>
+                  <div class="text-sm font-medium text-orange-600 mb-1">Schritt {{ index + 1 }}</div>
                   <div class="text-gray-900">{{ step }}</div>
                 </div>
 
                 <div class="flex items-center space-x-2">
-                  <button
-                    type="button"
-                    @click="editStep(index)"
-                    class="p-1 text-blue-600 hover:text-blue-800 transition-colors"
-                    title="Bearbeiten"
-                  >
+                  <button type="button" @click="editStep(index)"
+                    class="p-1 text-orange-600 hover:text-orange-800 transition-colors" title="Bearbeiten">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                      ></path>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
+                      </path>
                     </svg>
                   </button>
-                  <button
-                    type="button"
-                    @click="removeStep(index)"
-                    class="p-1 text-red-600 hover:text-red-800 transition-colors"
-                    title="Löschen"
-                  >
+                  <button type="button" @click="removeStep(index)"
+                    class="p-1 text-red-600 hover:text-red-800 transition-colors" title="Löschen">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                      ></path>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                      </path>
                     </svg>
                   </button>
                 </div>
@@ -327,68 +221,39 @@
           <!-- Add Step -->
           <div class="flex space-x-2">
             <input
-              class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
-              type="text"
-              v-model="currentStep"
-              :placeholder="
-                editingStepIndex !== null
-                  ? 'Schritt bearbeiten'
-                  : `Schritt ${steps.length + 1} hinzufügen`
-              "
-              @keydown.enter="addOrUpdateStep"
-            />
-            <button
-              type="button"
-              @click="addOrUpdateStep"
-              :disabled="!currentStep.trim()"
-              class="px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
-            >
+              class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all"
+              type="text" v-model="currentStep" :placeholder="editingStepIndex !== null
+                ? 'Schritt bearbeiten'
+                : `Schritt ${steps.length + 1} hinzufügen`
+                " @keydown.enter="addOrUpdateStep" />
+            <button type="button" @click="addOrUpdateStep" :disabled="!currentStep.trim()"
+              class="px-4 py-3 bg-gradient-to-r from-orange-600 to-pink-600 text-white rounded-lg hover:from-orange-700 hover:to-pink-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md">
               {{ editingStepIndex !== null ? 'Aktualisieren' : 'Hinzufügen' }}
             </button>
-            <button
-              v-if="editingStepIndex !== null"
-              type="button"
-              @click="cancelEditStep"
-              class="px-4 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-all"
-            >
+            <button v-if="editingStepIndex !== null" type="button" @click="cancelEditStep"
+              class="px-4 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-all">
               Abbrechen
             </button>
           </div>
         </div>
 
         <!-- Image Upload Section -->
-        <div class="bg-white rounded-xl shadow-sm p-6">
+        <div class="bg-white/80 backdrop-blur-md rounded-xl shadow-lg p-6">
           <h3 class="text-lg font-semibold text-gray-900 mb-4">Rezeptbild (optional)</h3>
 
           <!-- Upload Area -->
           <div
-            class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-gray-400 transition-colors"
-          >
-            <input
-              id="image"
-              type="file"
-              accept="image/*"
-              @change="handleImageUpload"
-              class="hidden"
-            />
+            class="border-2 border-dashed border-orange-300 rounded-lg p-6 text-center hover:border-orange-400 transition-colors bg-gradient-to-br from-orange-50 to-pink-50">
+            <input id="image" type="file" accept="image/*" @change="handleImageUpload" class="hidden" />
 
             <!-- Upload State -->
             <div v-if="!imagePreview && !isUploading">
-              <svg
-                class="w-12 h-12 mx-auto text-gray-400 mb-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                ></path>
+              <svg class="w-12 h-12 mx-auto text-orange-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6">
+                </path>
               </svg>
               <label for="image" class="cursor-pointer">
-                <span class="text-blue-600 hover:text-blue-700 font-medium">Bild hochladen</span>
+                <span class="text-orange-600 hover:text-orange-700 font-medium">Bild hochladen</span>
                 <span class="text-gray-600"> oder hier hineinziehen</span>
               </label>
               <p class="text-sm text-gray-500 mt-2">PNG, JPG bis zu 10MB</p>
@@ -397,30 +262,21 @@
             <!-- Loading State -->
             <div v-else-if="isUploading" class="py-8">
               <div
-                class="w-12 h-12 mx-auto mb-4 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"
-              ></div>
+                class="w-12 h-12 mx-auto mb-4 border-4 border-orange-600 border-t-transparent rounded-full animate-spin">
+              </div>
               <p class="text-gray-600">Bild wird hochgeladen...</p>
             </div>
 
             <!-- Preview State -->
             <div v-else class="space-y-4">
-              <img
-                :src="imagePreview"
-                alt="Vorschau"
-                class="max-w-xs max-h-48 mx-auto rounded-lg shadow-sm"
-              />
+              <img :src="imagePreview" alt="Vorschau" class="max-w-xs max-h-48 mx-auto rounded-lg shadow-md" />
               <div class="flex justify-center space-x-3">
-                <label
-                  for="image"
-                  class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 cursor-pointer transition-colors"
-                >
+                <label for="image"
+                  class="px-4 py-2 bg-gradient-to-r from-orange-600 to-pink-600 text-white rounded-lg hover:from-orange-700 hover:to-pink-700 cursor-pointer transition-all shadow-md">
                   Bild ändern
                 </label>
-                <button
-                  type="button"
-                  @click="removeImage"
-                  class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
-                >
+                <button type="button" @click="removeImage"
+                  class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">
                   Entfernen
                 </button>
               </div>
@@ -433,6 +289,7 @@
 </template>
 
 <script setup>
+// Imports for Vue, Router, Stores and Supabase
 import { useRecipesStore } from '@/stores/recipes'
 import { useAuthStore } from '@/stores/auth'
 import { ref, computed, onMounted, watch } from 'vue'
@@ -440,6 +297,7 @@ import { useRouter, useRoute } from 'vue-router'
 import { supabase } from '@/lib/supabase'
 import draggable from 'vuedraggable'
 
+// Form States
 const title = ref('')
 const portions = ref(2)
 const duration = ref(30)
@@ -459,9 +317,10 @@ const router = useRouter()
 const route = useRoute()
 const isUploading = ref(false)
 const errors = ref({})
-const isEditMode = computed(() => !!route.params.id)
-const LS_KEY = 'mealkeeper-create-recipe'
+const isEditMode = computed(() => !!route.params.id) // Check if the route is an edit route
+const LS_KEY = 'mealkeeper-create-recipe' // Local Storage Key for Recipe Data
 
+// Function to check if the form is valid
 const isFormValid = computed(() => {
   const hasTitle = title.value && title.value.trim().length > 0 && title.value.length <= 150
   const hasIngredients = ingredients.value.length > 0
@@ -472,6 +331,7 @@ const isFormValid = computed(() => {
   return hasTitle && hasIngredients && hasSteps && hasDuration && hasMealType
 })
 
+// Function to add or update an ingredient
 function addOrUpdateIngredient() {
   if (!currentIngredient.value.trim()) return
 
@@ -486,6 +346,7 @@ function addOrUpdateIngredient() {
   }
 }
 
+// Function to remove an ingredient
 function removeIngredient(index) {
   ingredients.value.splice(index, 1)
   // If the ingredient is being edited, cancel the edit
@@ -494,16 +355,19 @@ function removeIngredient(index) {
   }
 }
 
+// Function to edit an ingredient
 function editIngredient(index) {
   currentIngredient.value = ingredients.value[index]
   editingIngredientIndex.value = index
 }
 
+// Function to cancel the edit of an ingredient
 function cancelEditIngredient() {
   currentIngredient.value = ''
   editingIngredientIndex.value = null
 }
 
+// Function to add or update a step
 function addOrUpdateStep() {
   if (!currentStep.value.trim()) return
 
@@ -518,6 +382,7 @@ function addOrUpdateStep() {
   }
 }
 
+// Function to remove a step
 function removeStep(index) {
   steps.value.splice(index, 1)
   // If the step is being edited, cancel the edit
@@ -526,16 +391,19 @@ function removeStep(index) {
   }
 }
 
+// Function to edit a step
 function editStep(index) {
   currentStep.value = steps.value[index]
   editingStepIndex.value = index
 }
 
+// Function to cancel the edit of a step
 function cancelEditStep() {
   currentStep.value = ''
   editingStepIndex.value = null
 }
 
+// Function to handle the image upload
 async function handleImageUpload(event) {
   const file = event.target.files?.[0]
   if (!file) return
@@ -564,6 +432,7 @@ async function handleImageUpload(event) {
   }
 }
 
+// Function to remove the image
 function removeImage() {
   selectedImage.value = null
   imagePreview.value = ''
@@ -576,10 +445,12 @@ function removeImage() {
   }
 }
 
+// Function to go back to the recipes list
 function goBack() {
-  router.push('/')
+  router.push('/recipes')
 }
 
+// Function to upload the image to Supabase
 async function uploadToSupabase(file) {
   if (!file) return null
 
@@ -607,6 +478,7 @@ async function uploadToSupabase(file) {
   }
 }
 
+// Function to validate the form
 function validateForm() {
   errors.value = {}
 
@@ -631,6 +503,7 @@ function validateForm() {
   return Object.keys(errors.value).length === 0
 }
 
+// Function to reset the form
 function resetForm() {
   title.value = ''
   portions.value = 2
@@ -646,6 +519,7 @@ function resetForm() {
   errors.value = {}
 }
 
+// Function to load the form data from local storage
 function loadFromLocalStorage() {
   const saved = localStorage.getItem(LS_KEY)
   if (saved) {
@@ -667,6 +541,7 @@ function loadFromLocalStorage() {
   }
 }
 
+// Function to load the recipe data
 async function loadRecipeData() {
   if (!route.params.id) {
     return
@@ -692,6 +567,7 @@ async function loadRecipeData() {
   }
 }
 
+// Function to save the recipe
 async function saveRecipe() {
   if (!validateForm()) return
 
@@ -734,6 +610,7 @@ async function saveRecipe() {
   }
 }
 
+// Function to load the recipe data on mount
 onMounted(() => {
   if (isEditMode.value) {
     loadRecipeData()
@@ -742,13 +619,14 @@ onMounted(() => {
   }
 })
 
+// Function to watch the edit mode
 watch(isEditMode, (newVal) => {
   if (newVal) {
     loadRecipeData()
   }
 })
 
-// Save form on changes
+// Function to watch the form data
 watch(
   [title, portions, duration, mealType, ingredients, steps, uploadedImageUrl, imagePreview],
   ([

@@ -1,49 +1,31 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
+  <div class="min-h-screen bg-gradient-to-br from-orange-50 via-yellow-50 to-pink-50">
     <!-- Navigation for logged in users -->
-    <nav v-if="authStore.user" class="bg-white border-b border-gray-200 sticky top-0 z-50">
+    <nav v-if="authStore.user" class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
       <div class="max-w-6xl mx-auto px-4">
         <div class="flex items-center justify-between h-16">
           <div class="flex items-center space-x-8">
-            <router-link
-              to="/"
-              class="px-3 py-2 text-gray-600 font-medium border-b-2 border-transparent"
-            >
-              <h1 class="text-xl font-bold text-gray-900">MealKeeper</h1>
+            <router-link to="/recipes" class="px-3 py-2 text-gray-600 font-medium border-b-2 border-transparent">
+              <h1 class="text-xl font-bold bg-gradient-to-r from-orange-600 to-pink-600 bg-clip-text text-transparent">
+                🍳 MealKeeper</h1>
             </router-link>
           </div>
           <div class="flex space-x-2">
-            <router-link
-              to="/create"
-              class="flex items-center gap-1 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
-            >
+            <router-link to="/create"
+              class="flex items-center gap-1 bg-gradient-to-r from-orange-600 to-pink-600 text-white px-4 py-2 rounded-lg hover:from-orange-700 hover:to-pink-700 transition-all text-sm font-medium shadow-md">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                ></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
+                </path>
               </svg>
               Erstellen
             </router-link>
-            <button
-              @click="logout"
-              class="flex items-center gap-1 cursor-pointer bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors text-sm font-medium"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                viewBox="0 0 24 24"
-                class="w-4 h-4"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M17 16l4-4m0 0l-4-4m4 4H7m5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h3a3 3 0 013 3v1"
-                />
+            <button @click="logout"
+              class="flex items-center gap-1 cursor-pointer bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors text-sm font-medium">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2"
+                viewBox="0 0 24 24" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M17 16l4-4m0 0l-4-4m4 4H7m5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h3a3 3 0 013 3v1" />
               </svg>
               Abmelden
             </button>
@@ -53,41 +35,31 @@
     </nav>
 
     <!-- Login/Register form-->
-    <div v-if="!authStore.user" class="max-w-md mx-auto">
+    <div v-if="!authStore.user" class="max-w-md mx-auto pt-12">
       <div class="text-center mb-8">
         <img :src="logoUrl" alt="MealKeeper" class="w-64 h-64 mx-auto" />
-        <h1 class="text-3xl font-bold text-gray-900 mb-2">MealKeeper</h1>
+        <h1 class="text-3xl font-bold bg-gradient-to-r from-orange-600 to-pink-600 bg-clip-text text-transparent mb-2">
+          MealKeeper</h1>
         <p class="text-gray-600">Deine digitale Rezeptsammlung</p>
       </div>
 
-      <div class="bg-white rounded-xl shadow-sm p-6">
+      <div class="bg-white rounded-xl shadow-lg p-6">
         <!-- Tab System -->
         <div class="flex rounded-lg bg-gray-100 p-1 mb-6">
-          <button
-            class="flex-1 py-2 px-4 text-sm font-medium rounded-md transition-all"
-            @click="showLogin = false"
-            :class="
-              !showLogin ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-600 hover:text-gray-900'
-            "
-          >
+          <button class="flex-1 py-2 px-4 text-sm font-medium rounded-md transition-all" @click="showLogin = false"
+            :class="!showLogin ? 'bg-gradient-to-r from-orange-600 to-pink-600 text-white shadow-sm' : 'text-gray-600 hover:text-gray-900'
+              ">
             Registrieren
           </button>
-          <button
-            class="flex-1 py-2 px-4 text-sm font-medium rounded-md transition-all"
-            @click="showLogin = true"
-            :class="
-              showLogin ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-600 hover:text-gray-900'
-            "
-          >
+          <button class="flex-1 py-2 px-4 text-sm font-medium rounded-md transition-all" @click="showLogin = true"
+            :class="showLogin ? 'bg-gradient-to-r from-orange-600 to-pink-600 text-white shadow-sm' : 'text-gray-600 hover:text-gray-900'
+              ">
             Login
           </button>
         </div>
 
         <!-- Error Message -->
-        <div
-          v-if="authStore.error"
-          class="bg-red-50 border border-red-200 text-red-700 p-3 rounded-lg text-sm mb-4"
-        >
+        <div v-if="authStore.error" class="bg-red-50 border border-red-200 text-red-700 p-3 rounded-lg text-sm mb-4">
           {{ authStore.error }}
         </div>
 
@@ -96,99 +68,49 @@
           <form @submit.prevent="register" class="space-y-4">
             <div>
               <input
-                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
-                type="text"
-                v-model="username"
-                placeholder="Benutzername"
-                required
-              />
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all"
+                type="text" v-model="username" placeholder="Benutzername" required />
             </div>
             <div>
               <input
-                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
-                type="email"
-                v-model="email"
-                placeholder="E-Mail"
-                required
-              />
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all"
+                type="email" v-model="email" placeholder="E-Mail" required />
             </div>
             <div class="relative">
               <input
-                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all pr-10"
-                :type="showPasswordRegister ? 'text' : 'password'"
-                v-model="password"
-                placeholder="Passwort"
-                required
-              />
-              <button
-                type="button"
-                @click="showPasswordRegister = !showPasswordRegister"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all pr-10"
+                :type="showPasswordRegister ? 'text' : 'password'" v-model="password" placeholder="Passwort" required />
+              <button type="button" @click="showPasswordRegister = !showPasswordRegister"
                 class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
-                aria-label="Passwort anzeigen/ausblenden"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="w-6 h-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.27 2.943 9.543 7-1.273 4.057-5.065 7-9.543 7-4.477 0-8.268-2.943-9.542-7z"
-                  />
+                aria-label="Passwort anzeigen/ausblenden">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.27 2.943 9.543 7-1.273 4.057-5.065 7-9.543 7-4.477 0-8.268-2.943-9.542-7z" />
                 </svg>
               </button>
             </div>
             <div class="relative">
               <input
-                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all pr-10"
-                :type="showPasswordConfirmRegister ? 'text' : 'password'"
-                v-model="passwordConfirm"
-                placeholder="Passwort bestätigen"
-                required
-              />
-              <button
-                type="button"
-                @click="showPasswordConfirmRegister = !showPasswordConfirmRegister"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all pr-10"
+                :type="showPasswordConfirmRegister ? 'text' : 'password'" v-model="passwordConfirm"
+                placeholder="Passwort bestätigen" required />
+              <button type="button" @click="showPasswordConfirmRegister = !showPasswordConfirmRegister"
                 class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
-                aria-label="Passwort bestätigen anzeigen/ausblenden"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="w-6 h-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.27 2.943 9.543 7-1.273 4.057-5.065 7-9.543 7-4.477 0-8.268-2.943-9.542-7z"
-                  />
+                aria-label="Passwort bestätigen anzeigen/ausblenden">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.27 2.943 9.543 7-1.273 4.057-5.065 7-9.543 7-4.477 0-8.268-2.943-9.542-7z" />
                 </svg>
               </button>
             </div>
-            <button
-              type="submit"
-              :disabled="authStore.loading"
-              class="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
-            >
+            <button type="submit" :disabled="authStore.loading"
+              class="w-full bg-gradient-to-r from-orange-600 to-pink-600 text-white py-3 px-4 rounded-lg font-medium hover:from-orange-700 hover:to-pink-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md">
               {{ authStore.loading ? 'Lädt...' : 'Registrieren' }}
             </button>
           </form>
@@ -199,62 +121,33 @@
           <form @submit.prevent="login" class="space-y-4">
             <div>
               <input
-                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-all transition-all"
-                type="email"
-                v-model="email"
-                placeholder="E-Mail"
-                required
-              />
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-all transition-all"
+                type="email" v-model="email" placeholder="E-Mail" required />
             </div>
             <div class="relative">
               <input
-                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all pr-10"
-                :type="showPasswordLogin ? 'text' : 'password'"
-                v-model="password"
-                placeholder="Passwort"
-                required
-              />
-              <button
-                type="button"
-                @click="showPasswordLogin = !showPasswordLogin"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all pr-10"
+                :type="showPasswordLogin ? 'text' : 'password'" v-model="password" placeholder="Passwort" required />
+              <button type="button" @click="showPasswordLogin = !showPasswordLogin"
                 class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
-                aria-label="Passwort anzeigen/ausblenden"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="w-6 h-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.27 2.943 9.543 7-1.273 4.057-5.065 7-9.543 7-4.477 0-8.268-2.943-9.542-7z"
-                  />
+                aria-label="Passwort anzeigen/ausblenden">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.27 2.943 9.543 7-1.273 4.057-5.065 7-9.543 7-4.477 0-8.268-2.943-9.542-7z" />
                 </svg>
               </button>
             </div>
-            <button
-              type="submit"
-              :disabled="authStore.loading"
-              class="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
-            >
+            <button type="submit" :disabled="authStore.loading"
+              class="w-full bg-gradient-to-r from-orange-600 to-pink-600 text-white py-3 px-4 rounded-lg font-medium hover:from-orange-700 hover:to-pink-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md">
               {{ authStore.loading ? 'Lädt...' : 'Anmelden' }}
             </button>
           </form>
         </div>
-        <div
-          v-if="registrationSuccess"
-          class="bg-green-50 border border-green-200 text-green-700 p-3 rounded-lg text-sm mt-4"
-        >
+        <div v-if="registrationSuccess"
+          class="bg-green-50 border border-green-200 text-green-700 p-3 rounded-lg text-sm mt-4">
           Registrierung erfolgreich! Bitte bestätige deine E-Mail.
         </div>
       </div>
@@ -269,16 +162,11 @@
       </div>
 
       <!-- Search Section -->
-      <div class="bg-white rounded-xl shadow-sm p-6 mb-6">
+      <div class="bg-white/80 backdrop-blur-md rounded-xl shadow-sm p-6 mb-6">
         <div class="flex flex-col md:flex-row gap-4">
           <div class="flex-1">
-            <input
-              type="text"
-              placeholder="Rezepte durchsuchen..."
-              v-model="searchTerm"
-              @input="onSearchInput"
-              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
-            />
+            <input type="text" placeholder="Rezepte durchsuchen..." v-model="searchTerm" @input="onSearchInput"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none transition-all" />
           </div>
         </div>
       </div>
@@ -286,28 +174,17 @@
       <!-- Loading State -->
       <div v-if="recipesStore.loading" class="text-center py-12">
         <div
-          class="inline-block w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mb-4"
-        ></div>
+          class="inline-block w-8 h-8 border-4 border-orange-600 border-t-transparent rounded-full animate-spin mb-4">
+        </div>
         <p class="text-gray-600">Rezepte werden geladen...</p>
       </div>
 
       <!-- Error State -->
-      <div
-        v-else-if="recipesStore.error"
-        class="bg-red-50 border border-red-200 text-red-700 p-6 rounded-xl text-center"
-      >
-        <svg
-          class="w-12 h-12 mx-auto mb-4 text-red-400"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          ></path>
+      <div v-else-if="recipesStore.error"
+        class="bg-red-50 border border-red-200 text-red-700 p-6 rounded-xl text-center">
+        <svg class="w-12 h-12 mx-auto mb-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
         </svg>
         <h3 class="text-lg font-semibold mb-2">Fehler beim Laden der Rezepte</h3>
         <p>{{ recipesStore.error }}</p>
@@ -316,35 +193,19 @@
       <!-- Empty State -->
       <div v-else-if="recipesStore.recipes.length === 0" class="text-center py-12">
         <div
-          class="w-24 h-24 mx-auto mb-6 bg-gray-100 rounded-full flex items-center justify-center"
-        >
-          <svg
-            class="w-12 h-12 text-gray-400"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
-            ></path>
+          class="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-orange-100 to-pink-100 rounded-full flex items-center justify-center">
+          <svg class="w-12 h-12 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
+            </path>
           </svg>
         </div>
         <h3 class="text-xl font-semibold text-gray-900 mb-2">Noch keine Rezepte vorhanden</h3>
         <p class="text-gray-600 mb-6">Erstelle dein erstes Rezept und baue deine Sammlung auf!</p>
-        <router-link
-          to="/create"
-          class="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
-        >
+        <router-link to="/create"
+          class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-orange-600 to-pink-600 text-white rounded-lg hover:from-orange-700 hover:to-pink-700 transition-all font-medium shadow-md">
           <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-            ></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
           </svg>
           Erstes Rezept erstellen
         </router-link>
@@ -352,40 +213,25 @@
 
       <!-- Recipe Grid -->
       <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div
-          @click="goToRecipe(recipe.id)"
-          v-for="recipe in recipesStore.recipes"
-          :key="recipe.id"
-          class="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer group overflow-hidden"
-        >
+        <div @click="goToRecipe(recipe.id)" v-for="recipe in recipesStore.recipes" :key="recipe.id"
+          class="bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-200 cursor-pointer group overflow-hidden">
           <!-- Recipe Image -->
           <div class="aspect-video bg-gray-200 relative overflow-hidden">
-            <img
-              :src="`${recipe.image_url}?width=600&quality=70` || '/default-recipe.jpg'"
-              :alt="recipe.title"
-              loading="lazy"
-              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
-              @error="$event.target.src = '/default-recipe.jpg'"
-            />
+            <img :src="`${recipe.image_url}?width=600&quality=70` || '/default-recipe.jpg'" :alt="recipe.title"
+              loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+              @error="$event.target.src = '/default-recipe.jpg'" />
             <div class="absolute top-3 left-3 right-3 flex justify-between items-start">
               <!-- Duration Badge left -->
               <div
-                class="flex items-center bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full text-xs font-medium text-gray-700"
-              >
+                class="flex items-center bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full text-xs font-medium text-gray-700">
                 <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                  ></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
                 {{ recipe.duration_minutes }} Min
               </div>
               <!-- Meal Type Badge right -->
-              <span
-                class="bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full text-xs font-medium text-gray-700"
-              >
+              <span class="bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full text-xs font-medium text-gray-700">
                 {{ recipe.meal_type }}
               </span>
             </div>
@@ -393,9 +239,7 @@
 
           <!-- Recipe Title -->
           <div class="p-4">
-            <h3
-              class="font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors line-clamp-2"
-            >
+            <h3 class="font-semibold text-gray-900 mb-2 group-hover:text-orange-600 transition-colors line-clamp-2">
               {{ recipe.title }}
             </h3>
           </div>
@@ -458,6 +302,7 @@ async function login() {
 // Logout
 async function logout() {
   await authStore.signOut()
+  router.push('/') // Redirect zur Landing Page
 }
 
 // Watch User
