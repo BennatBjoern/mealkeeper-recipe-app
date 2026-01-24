@@ -19,15 +19,15 @@
           </h1>
 
           <div class="flex gap-1 md:gap-2">
-            <!-- <button
-              class="flex items-center gap-1 px-2 md:px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-all text-xs md:text-sm"
+            <button
+              class="flex items-center gap-1 px-2 md:px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-all cursor-pointer text-xs md:text-sm"
               type="button" @click="confirmReset">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
               </svg>
-              <span class="hidden sm:inline">Zurücksetzen</span>
-            </button> -->
+              <span class="sm:inline">Reset</span>
+            </button>
             <button
               class="px-3 md:px-6 py-2 bg-gradient-to-r from-orange-600 to-pink-600 text-white rounded-lg hover:from-orange-700 hover:to-pink-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md text-xs md:text-sm"
               type="button" @click="saveRecipe" form="recipe-form" :disabled="!isFormValid || recipesStore.loading">
@@ -123,7 +123,7 @@
 
               <span class="text-sm text-gray-600">{{
                 portions === 1 ? 'Portion' : 'Portionen'
-              }}</span>
+                }}</span>
             </div>
 
           </div>
@@ -198,7 +198,7 @@
             Zubereitung
             <span class="text-sm font-normal text-gray-500">({{ steps.length }} {{ steps.length === 1 ? 'Schritt' :
               'Schritte'
-              }})</span>
+            }})</span>
           </h3>
 
           <!-- Existing Steps -->
@@ -311,6 +311,36 @@
       </form>
     </div>
   </div>
+  <!-- Confirmation Modal -->
+  <div v-if="showResetConfirmation" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+    @click.self="showResetConfirmation = false">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 md:p-8 transform transition-all">
+      <div class="flex justify-center mb-4">
+        <div class="w-16 h-16 rounded-full bg-orange-100 flex items-center justify-center">
+          <svg class="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+        </div>
+      </div>
+      <h3 class="text-xl md:text-2xl font-bold text-gray-900 mb-2 text-center">
+        {{ isEditMode ? 'Änderungen verwerfen?' : 'Felder leeren?' }}
+      </h3>
+      <p class="text-gray-600 mb-6 text-center">
+        {{ resetModalText }}
+      </p>
+      <div class="flex flex-col sm:flex-row gap-3">
+        <button @click="showResetConfirmation = false"
+          class="flex-1 px-6 py-3 border-2 border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 cursor-pointer transition-all">
+          Abbrechen
+        </button>
+        <button @click="executeReset"
+          class="flex-1 px-6 py-3 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 cursor-pointer transition-all shadow-md">
+          {{ isEditMode ? 'Verwerfen' : 'Alles löschen' }}
+        </button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -342,8 +372,20 @@ const router = useRouter()
 const route = useRoute()
 const isUploading = ref(false)
 const errors = ref({})
-const isEditMode = computed(() => !!route.params.id) // Check if the route is an edit route
 const LS_KEY = 'mealkeeper-create-recipe' // Local Storage Key for Recipe Data
+const originalRecipeData = ref(null)
+const showResetConfirmation = ref(false)
+
+// Check if the route is an edit route
+const isEditMode = computed(() => !!route.params.id)
+
+// Reset Modal Text based on mode
+const resetModalText = computed(() => {
+  return isEditMode.value
+    ? 'Alle Änderungen werden verworfen und die Original-Daten wiederhergestellt. Diese Aktion kann nicht rückgängig gemacht werden.'
+    : 'Alle eingegebenen Daten werden gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.'
+})
+
 
 // Function to check if the form is valid
 const isFormValid = computed(() => {
@@ -589,6 +631,18 @@ async function loadRecipeData() {
     // Set the image URL
     uploadedImageUrl.value = recipe.image_url || ''
     imagePreview.value = recipe.image_url || ''
+
+    // Store the original data for reset
+    originalRecipeData.value = {
+      title: recipe.title || '',
+      portions: recipe.portions || 2,
+      duration: recipe.duration_minutes || 30,
+      mealType: recipe.meal_type || 'Hauptspeise',
+      ingredients: [...recipe.recipe_ingredients.map((ing) => ing.ingredient_text)],
+      steps: [...recipe.recipe_steps.map((step) => step.step_text)],
+      uploadedImageUrl: recipe.image_url || '',
+      imagePreview: recipe.image_url || ''
+    }
   }
 }
 
@@ -633,6 +687,45 @@ async function saveRecipe() {
     errors.value.general = 'Fehler beim Speichern: ' + err.message
     console.error(err)
   }
+}
+
+// Function to show reset confirmation
+function confirmReset() {
+  showResetConfirmation.value = true
+}
+
+// Function to execute reset (wird vom Modal aufgerufen)
+function executeReset() {
+  resetToOriginal()
+  showResetConfirmation.value = false
+}
+
+// Function to reset to original state
+function resetToOriginal() {
+  if (isEditMode.value && originalRecipeData.value) {
+    title.value = originalRecipeData.value.title
+    portions.value = originalRecipeData.value.portions
+    duration.value = originalRecipeData.value.duration
+    mealType.value = originalRecipeData.value.mealType
+    ingredients.value = [...originalRecipeData.value.ingredients]
+    steps.value = [...originalRecipeData.value.steps]
+    uploadedImageUrl.value = originalRecipeData.value.uploadedImageUrl
+    imagePreview.value = originalRecipeData.value.imagePreview
+
+    const fileInput = document.getElementById('image')
+    if (fileInput) {
+      fileInput.value = ''
+    }
+    selectedImage.value = null
+  } else {
+    resetForm()
+    localStorage.removeItem(LS_KEY)
+  }
+  currentIngredient.value = ''
+  currentStep.value = ''
+  editingIngredientIndex.value = null
+  editingStepIndex.value = null
+  errors.value = {}
 }
 
 // Function to load the recipe data on mount
